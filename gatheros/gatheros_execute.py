@@ -33,7 +33,6 @@ parser.add_argument("--output-file", '-o',\
 					help = "The file to save the command output" )
 
 
-import pickle
 def command_loader( json_file ) :
 	with open( json_file, 'r' ) as file :
 		ret = json.load( file )
@@ -73,6 +72,7 @@ def main( arguments = sys.argv[1:] ) :
 	else :
 		print json_dump
 
+	return command_dict
 
 
 if __name__ == '__main__' :

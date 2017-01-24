@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title> Command List </title>
+
+
+		<script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+
+		<link title="no title" media="all" charset="utf-8" href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+
+	</head>
+
+	<body>
+	{% for i in command_array %}
+		<div>	<iframe width="100%" height="100%" src="/command/{{ i['name'] }}"></iframe> </div>
+	{% endfor %}
+	</body>
+
+
+</html>

@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<title> Commands </title>
+
+		<script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+
+		<link title="no title" media="all" charset="utf-8" href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+	</head>
+
+
+
+	<body>
+
+		<h3 border="1"> {{ title }} </h3>
+		{% for comm in comm_list %}
+
+		<div> {{ comm['description'] }}</div>
+
+		<table border="1" width="100%">
+		<tr>
+			<td>
+				<pre style="white-space: pre-wrap; word-wrap: break-word;">{{ comm['command'] }}</pre>
+			</td>
+		</tr>
+
+		<tr>
+			<td><pre class="collapse in" style="white-space: pre-wrap; word-wrap: break-word;">{{ comm['response'] }}</pre>
+			</td>
+		</tr>
+		</table>
+
+		<br><br>
+
+		{% endfor %}
+
+	</body>
+</html>
