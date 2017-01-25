@@ -1,3 +1,5 @@
 include README.md
 include requirements.txt
 include gatheros/commands/*.json
+include gatheros/show/templates/*.html
+include gatheros/show/static/*

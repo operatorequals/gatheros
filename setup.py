@@ -1,8 +1,10 @@
+#!/usr/bin/env python
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
+import gatheros
 
-__version__ = '0.0.1'
+__version__ = gatheros.__version__
 
 here = path.abspath(path.dirname(__file__))
 
@@ -18,7 +20,7 @@ install_requires = [x.strip() for x in all_reqs if 'git+' not in x]
 dependency_links = [x.strip().replace('git+', '') for x in all_reqs if x.startswith('git+')]
 
 setup(
-    name='gatheros',
+    name=gatheros.__name__,
     version=__version__,
     description='A suite for gathering and presenting OS related information',
     long_description=long_description,
@@ -29,13 +31,20 @@ setup(
       'Development Status :: 3 - Alpha',
       'Intended Audience :: Developers',
       'Programming Language :: Python :: 2',
+      'Operating System :: POSIX :: Linux'
     ],
     keywords='',
     packages=find_packages(exclude=['docs', 'tests*']),
     include_package_data=True,
-    author='John Torakis',
+    author=gatheros.__author__,
     install_requires=install_requires,
     dependency_links=dependency_links,
     author_email='john.torakis@gmail.com',
-
+    # scripts = ["gatheros/gatheros", "gatheros/gatheros_show", "gatheros/gatheros_exec" ],
+    entry_points = {
+        'console_scripts' : [ "gatheros=gatheros.gatheros:main",
+                        "gatheros-exec=gatheros.gatheros_exec:main",
+                        "gatheros-show=gatheros.gatheros_show:main",
+                        ]
+                    }
 )

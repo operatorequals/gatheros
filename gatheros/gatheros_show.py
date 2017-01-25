@@ -28,7 +28,7 @@ def show( command_dict, ip, port ) :
 def main( arguments = sys.argv[1:] ) :
 
 	args = parser.parse_args( arguments )
-	print args
+	# print args
 	with open( args.file, 'r' ) as file :
 		command_dict = json.load( file )
 

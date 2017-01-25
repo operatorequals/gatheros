@@ -2,8 +2,10 @@ from flask import Flask, request, render_template, abort
 import json
 import os
 
-template_folder = "templates"
-static_folder= "static"
+base_dir = os.sep.join(__file__.split( os.sep )[:-1])
+
+template_folder = base_dir + os.sep + "templates"
+static_folder = base_dir + os.sep + "static"
 
 print template_folder, static_folder
 # print __name__
@@ -11,7 +13,7 @@ flask_app_name = __name__.split('.')[0]
 # flask_app_name = "gatheros." + __name__.split('.')[0]
 # flask_app_name = "gatheros"
 # flask_app_name = __name__
-print flask_app_name
+# print flask_app_name
 flask_app = Flask( flask_app_name,\
 					template_folder = template_folder,\
 					static_folder = static_folder)

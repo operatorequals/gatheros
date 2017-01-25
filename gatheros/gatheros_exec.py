@@ -1,20 +1,22 @@
 #!/usr/bin/env python
 from execute.command_function import get_command_execute
+from gatheros import __name__ as module_name
 
 import argparse
 import sys, os
 import json
 
+base_dir = os.sep.join(__file__.split( os.sep )[:-1])
 
 parser = argparse.ArgumentParser( description = "A tool for remote system enumeration" )
 
-parser.add_argument("--command-file", '-f',\
+parser.add_argument( "--command-file", '-f',\
 					help = "The file that contains the commands to run on the remote system in JSON format",\
-					default = "commands/LinuxEnum.json" )
+					default = base_dir+"/commands/LinuxEnum.json" )
 
 subparsers = parser.add_subparsers( help = "The connection type with the remote host", dest='command')
 
-localhost_parser = subparsers.add_parser("local")
+localhost_parser = subparsers.add_parser( "local" )
 
 ssh_parser = subparsers.add_parser("ssh")
 ssh_parser.add_argument("SSH_connection", default = "root@172.0.0.1",\
@@ -60,7 +62,7 @@ def execute( command_dict, execute_command ) :
 def main( arguments = sys.argv[1:] ) :
 
 	args = parser.parse_args( arguments )
-	print args
+	# print args
 	command_dict = command_loader( args.command_file )
 
 	execute_command = get_command_execute( args )
