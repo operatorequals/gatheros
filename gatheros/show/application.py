@@ -1,12 +1,20 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, abort
 import json
 import os
 
-template_folder=os.path.abspath("show/templates")
-static_folder=os.path.abspath("show/static")
-# print template_folder, static_folder
+template_folder = "templates"
+static_folder= "static"
+
+print template_folder, static_folder
 # print __name__
-flask_app = Flask( __name__.split('.')[0], template_folder = template_folder, static_folder = static_folder )
+flask_app_name = __name__.split('.')[0]
+# flask_app_name = "gatheros." + __name__.split('.')[0]
+# flask_app_name = "gatheros"
+# flask_app_name = __name__
+print flask_app_name
+flask_app = Flask( flask_app_name,\
+					template_folder = template_folder,\
+					static_folder = static_folder)
 
 command_dict = {}
 
@@ -18,6 +26,8 @@ def index() :
 
 @flask_app.route('/command/<name>')
 def commandsPage( name ) :
+	if name not in command_dict['command_groups'].keys() :
+		return abort(404)
 	return render_template("commands.html", title = name, comm_list = command_dict['command_groups'][name] )
 
 

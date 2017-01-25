@@ -9,7 +9,7 @@ def runSocketCommand( comm ) :
 	return client.recv(4096*2)
 
 def runLocalhostCommand( comm ) :
-	return os.popen( comm ).read()
+	return os.popen( " " + comm + " 2>&1" ).read()
 
 
 

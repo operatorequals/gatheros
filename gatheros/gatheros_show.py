@@ -22,7 +22,7 @@ parser.add_argument("file",\
 
 def show( command_dict, ip, port ) :
 	flask.command_dict = command_dict
-	flask.flask_app.run( host=ip, port = port )
+	flask.flask_app.run( host = ip, port = port )
 
 
 def main( arguments = sys.argv[1:] ) :

@@ -9,7 +9,8 @@ import json
 parser = argparse.ArgumentParser( description = "A tool for remote system enumeration" )
 
 parser.add_argument("--command-file", '-f',\
-					help = "The file that contains the commands to run on the remote system in JSON format" )
+					help = "The file that contains the commands to run on the remote system in JSON format",\
+					default = "commands/LinuxEnum.json" )
 
 subparsers = parser.add_subparsers( help = "The connection type with the remote host", dest='command')
 
@@ -42,7 +43,7 @@ def command_loader( json_file ) :
 def execute( command_dict, execute_command ) :
 
 	for command_group in command_dict['command_groups'] :
-		print command_group
+		# print command_group
 		for command in command_dict['command_groups'][command_group] :
 			# print command
 			response = execute_command( command['command'] ).strip()

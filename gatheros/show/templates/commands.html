@@ -24,7 +24,10 @@
 		</tr>
 
 		<tr>
-			<td><pre class="collapse in" style="white-space: pre-wrap; word-wrap: break-word;">{{ comm['response'] }}</pre>
+			<td>
+			{% if comm['response'] %}
+			<pre class="collapse in" style="white-space: pre-wrap; word-wrap: break-word;">{{ comm['response'] }}</pre>
+			{% endif %}
 			</td>
 		</tr>
 		</table>
