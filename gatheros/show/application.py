@@ -7,7 +7,7 @@ base_dir = os.sep.join(__file__.split( os.sep )[:-1])
 template_folder = base_dir + os.sep + "templates"
 static_folder = base_dir + os.sep + "static"
 
-print template_folder, static_folder
+# print template_folder, static_folder
 # print __name__
 flask_app_name = __name__.split('.')[0]
 # flask_app_name = "gatheros." + __name__.split('.')[0]
