@@ -30,13 +30,13 @@ createEmptyCommandGroup.index = 0
 
 
 def createEmptyCommand ( ) :
-	unique = os.urandom(8).encode( 'hex' )
+	unique = os.urandom(12).encode( 'hex' )
 	ret = {}
 	ret['command'] = ''
 	ret['description'] = ''
 	ret['index'] = createEmptyCommand.index
 	ret['depends'] = []
-	ret['solves'] = []
+	ret['unlocks'] = []
 	ret['response_filter'] = ''	# the 'response' variable will contain the command response
 	ret['show'] = True
 	createEmptyCommand.index += 1

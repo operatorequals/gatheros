@@ -1,5 +1,6 @@
 import cmd
 import json
+import termcolor
 
 from empty_creator import createEmptyCommandGroup, createEmptyStruct, createEmptyCommand
 from populator import populateDict
@@ -10,6 +11,7 @@ class EditorShell ( cmd.Cmd ) :
 	def __init__ ( self, file ) :
 		cmd.Cmd.__init__(self)
 		self.file = file
+		# self.struct = json.load ( self.file )
 		try :
 			self.struct = json.load ( self.file )
 		except :
@@ -70,14 +72,12 @@ class EditorShell ( cmd.Cmd ) :
 		pass
 
 
-	def do_list( self, line ) :
-		for group in self.struct['CommandGroups'].keys() :
-			print group
 
 
 	def do_show_command( self, line ) :
 
 		pass
+
 
 	def do_edit_command( self, line ) :
 		if not line :
@@ -86,21 +86,63 @@ class EditorShell ( cmd.Cmd ) :
 		line = line.strip()
 		toks = line.split()
 		ident = toks[0]
-		for group in self.struct['CommandGroups'].values() :
+		for gname, group in self.struct['CommandGroups'].iteritems() :
 			try :
-				comm = group[ ident ]
+				comm = group['Commands'][ident]
 				break
 			except :
 				pass
 
-		print comm
+		if not comm :
+			print "Identifier '%s' doesn't exist" % comm
+			return
+		populateDict( comm, False )
+
+
+	def do_edit_group( self, line ) :
+		if not line :
+			print "Need a 'command identifier' "
+			return
+		line = line.strip()
+		toks = line.split()
+		gname = toks[0]
+		group = self.struct['CommandGroups'][gname]
+		populateDict( group )
+
+		if not comm :
+			print "Identifier '%s' doesn't exist" % comm
+			return
+
+
+	def do_list( self, line ) :
+		for group in self.struct['CommandGroups'].keys() :
+			print group
+
+	def do_list_commands( self, line ) :
+		for gname, group in self.struct['CommandGroups'].iteritems() :
+			print "=========== %s ===========" % group['name']
+			for k, v in group['Commands'].iteritems() :
+				print '''{0:24} -| {1:<64}\n-> {2:<64}
+'''.format( k, v['command'].encode('utf8'), v['description'].encode('utf8') )
+			print "=========== --- ===========" 
+			print 
+
 
 	def do_save( self, line ) :
-		json.dump( self.struct, self.file, indent = 1 )
-		self.file.flush()
+
+		self.file.seek(0)
+		self.file.write( json.dumps( self.struct, indent = 1 ) + '\n' )
+		self.file.truncate()
 
 
-
+	def do_create_dependency( self, line ) :
+		if not line :
+			print "Need a 'name' "
+			return
+		line = line.strip()
+		toks = line.split()
+		dep = toks[0]
+		self.struct['DependencyTokens'].append( dep )
 
 
 	def do_d_list( self, line ) :
