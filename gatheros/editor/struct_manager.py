@@ -3,10 +3,16 @@ import os
 import re
 
 
+def createCodename( name ) :
+ 	codename = name.lower()
+	codename = re.sub( "\s", "", codename )
+	codename = re.sub( "\W", "", codename )
+	return codename
 
 def createEmptyStruct () :
 	ret = {}
 	ret['CommandGroups'] = {}
+	ret['Commands'] = {}
 	ret['DependenyTokens'] = []
 	ret['Metadata'] = {
 		'author' : '',
@@ -17,19 +23,20 @@ def createEmptyStruct () :
 
 
 def createEmptyCommandGroup ( name ) :
-	codename = name.lower()
-	codename = re.sub( "\s", "", codename )
-	codename = re.sub( "\W", "", codename )
+	codename = createCodename( name )
 	ret = {}
 	ret['name'] = name
 	ret['index'] = createEmptyCommandGroup.index
-	ret['Commands'] = {}
+	ret['Commands'] = []
 	createEmptyCommandGroup.index += 1
 	return ( codename, ret )
 createEmptyCommandGroup.index = 0
 
 
-def createEmptyCommand ( ) :
+def createEmptyCommand ( zero_index = False ) :
+	if zero_index :
+		createEmptyCommand.index = 0
+
 	unique = os.urandom(12).encode( 'hex' )
 	ret = {}
 	ret['command'] = ''
@@ -43,3 +50,21 @@ def createEmptyCommand ( ) :
 
 	return ( unique, ret )
 createEmptyCommand.index = 0
+
+
+
+def addCommand( struct, comm_group_codename, comm_id, command ) :
+	struct['Commands'][comm_id] = command
+	struct['CommandGroups'][comm_group_codename]['Commands'][comm_group_codename].append(comm_id)
+
+
+def deleteCommand( comm_id, comm_group_codename = None ) :
+	del struct['Commands'][comm_id]
+	if comm_group_codename :
+		struct['CommandGroups'][comm_group_codename]
+	else :
+		for commandgroup in struct['CommandGroups'].values() :
+			try :
+				commandgroup['Commands'].remove( comm_id )
+			except :
+				pass

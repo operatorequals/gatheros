@@ -45,6 +45,7 @@ setup(
         'console_scripts' : [ "gatheros=gatheros.gatheros:main",
                         "gatheros-exec=gatheros.gatheros_exec:main",
                         "gatheros-show=gatheros.gatheros_show:main",
+                        "gatheros-edit=gatheros.gatheros_edit:main",
                         ]
                     }
 )

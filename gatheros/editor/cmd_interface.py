@@ -2,7 +2,7 @@ import cmd
 import json
 import termcolor
 
-from empty_creator import createEmptyCommandGroup, createEmptyStruct, createEmptyCommand
+from struct_manager import createEmptyCommandGroup, createEmptyStruct, createEmptyCommand
 from populator import populateDict
 
 class EditorShell ( cmd.Cmd ) :

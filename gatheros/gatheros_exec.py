@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from execute.command_function import get_command_execute
 from gatheros import __name__ as module_name
+from execute.execution_unit import ExecutionUnit
 
 import argparse
 import sys, os
@@ -10,7 +11,7 @@ base_dir = os.sep.join(__file__.split( os.sep )[:-1])
 
 parser = argparse.ArgumentParser( description = "A tool for remote system enumeration" )
 
-parser.add_argument( "--command-file", '-f',\
+parser.add_argument( "--command-file", '-c',\
 					help = "The file that contains the commands to run on the remote system in JSON format",\
 					default = base_dir+"/commands/LinuxEnum.json" )
 
@@ -35,6 +36,7 @@ reverse_parser.add_argument("--port", '-p', help = "TCP port to wait for the she
 parser.add_argument("--output-file", '-o',\
 					help = "The file to save the command output" )
 
+# parser.add_argument("--quiet", '-q', help = )
 
 def command_loader( json_file ) :
 	with open( json_file, 'r' ) as file :
@@ -42,31 +44,14 @@ def command_loader( json_file ) :
 	return ret
 
 
-def execute( command_dict, execute_command ) :
-
-	for command_group in command_dict['command_groups'] :
-		# print command_group
-		for command in command_dict['command_groups'][command_group] :
-			# print command
-			response = execute_command( command['command'] ).strip()
-			try :
-				response = response.decode('utf-8')
-			except :
-				pass
-			command['response'] = response
-
-	return command_dict
-
-
-
 def main( arguments = sys.argv[1:] ) :
 
 	args = parser.parse_args( arguments )
-	# print args
 	command_dict = command_loader( args.command_file )
 
 	execute_command = get_command_execute( args )
-	execute( command_dict, execute_command )
+	execUnit = ExecutionUnit( execute_command, command_dict )
+	execUnit.execute()
 
 	json_dump = json.dumps( command_dict, indent = 1 )
 	if args.output_file :
