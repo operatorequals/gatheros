@@ -32,18 +32,19 @@ class ExecutionUnit :
 				commFailed.add( comm_id )
 				print "[!] Command '%s' couldn't be executed." % comm_id
 				print "'%s'" % command['command']
+				# command['error'] = True
 				print sys.exc_info()[0]
 				continue
 
-			# try :
-			# 	filter_ = command['response_filter']
-			# 	if filter_ :
-			# 		response = self.filterResponse( response, filter_ )
-			# except KeyError:
-			# 	pass
-			# except :
-			# 	print "Command '%s' filter:\n>>> %s\n Couldn't be executed.\n" % (comm_id, filter_)
-			# command['response'] = response
+			try :
+				filter_ = command['response_filter']
+				if filter_ :
+					response = self.filterResponse( response, filter_ )
+			except KeyError:
+				pass
+			except :
+				print "Command '%s' filter:\n>>> %s\n Couldn't be executed.\n" % (comm_id, filter_)
+			command['response'] = response
 
 
 		# commSet.difference_update( commFailed )
@@ -66,7 +67,7 @@ class ExecutionUnit :
 		return ret
 
 
-	def execute ( self ) :
+	def execute( self ) :
 		wDependencies = set( [ id_ for id_, command in self.allCommandsDict.iteritems()\
 										if command['depends'] ] )
 		woutDependencies = self.allCommands - wDependencies
@@ -78,3 +79,5 @@ class ExecutionUnit :
 			self.executeCommandSet( readyCommands )
 			print "Remaining Commands: %d" % len(self.notExecuted)
 			readyCommands = self.getReadyCommands()
+
+		return self.commStruct

@@ -18,24 +18,29 @@ flask_app = Flask( flask_app_name,\
 					template_folder = template_folder,\
 					static_folder = static_folder)
 
-command_dict = {}
+commStruct = {}
 
 
 @flask_app.route('/')
-def index() :
-    return render_template("index.html", command_filenames = sorted(command_dict['command_groups'].keys()))
+def index_page() :
+	groups = commStruct['CommandGroups']
+	group_items = groups.items()
+	ordered_groups = sorted(groups.items(), key = lambda i:i[1]['index'] )
+	return render_template("index.html", commandGroups = ordered_groups)
 
 
 @flask_app.route('/command/<name>')
 def commandsPage( name ) :
-	if name not in command_dict['command_groups'].keys() :
+	if name not in commStruct['CommandGroups'].keys() :
 		return abort(404)
-	return render_template("commands.html", title = name, comm_list = command_dict['command_groups'][name] )
 
-
-@flask_app.route('/commands')
-def commandListPage() :
-    return render_template("command_list.html", command_array = command_dict['command_groups'])
+	group = commStruct['CommandGroups'][ name ]
+	command_ids = set( group['Commands'] )
+	print command_ids
+	command_dict = [ (id_, comm) for id_, comm in commStruct['Commands'].iteritems() if id_ in command_ids]
+	ordered_commands = sorted(command_dict, key = lambda i:i[1]['index'] )
+	# print ordered_commands
+	return render_template("commands.html", title = group['name'], commList = ordered_commands )
 
 
 @flask_app.route('/search/', methods = ['POST'])

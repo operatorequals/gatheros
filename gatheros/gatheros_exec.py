@@ -36,7 +36,7 @@ reverse_parser.add_argument("--port", '-p', help = "TCP port to wait for the she
 parser.add_argument("--output-file", '-o',\
 					help = "The file to save the command output" )
 
-# parser.add_argument("--quiet", '-q', help = )
+# parser.add_argument("--quiet", '-q', help = "")
 
 def command_loader( json_file ) :
 	with open( json_file, 'r' ) as file :
@@ -51,7 +51,7 @@ def main( arguments = sys.argv[1:] ) :
 
 	execute_command = get_command_execute( args )
 	execUnit = ExecutionUnit( execute_command, command_dict )
-	execUnit.execute()
+	command_dict = execUnit.execute()
 
 	json_dump = json.dumps( command_dict, indent = 1 )
 	if args.output_file :

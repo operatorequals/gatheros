@@ -44,11 +44,11 @@
 	<tr height="90%">
 	<td>
 		<table border="1" width="100%" height="100%">
-		{% for filename in command_filenames %}
+		{% for group in commandGroups %}
 
 		<tr >	<!-- Groups -->
 			<td  >
-				<a href="/command/{{ filename }}" target="commands-frame"> {{ filename }} </a>
+				<a href="/command/{{ group[0] }}" target="commands-frame"> {{ group[1]['name'] }} </a>
 			</td>
 
 		</tr>
@@ -59,7 +59,7 @@
 	</td>
 
 	<td  height="100%" width="80%">
-		<iframe width="100%" height="100%" src="/command/{{ command_filenames[0] }}" name="commands-frame"> </iframe>
+		<iframe width="100%" height="100%" src="/command/{{ commandGroups[0][0] }}" name="commands-frame"> </iframe>
 	</td>
 
 	</tr>

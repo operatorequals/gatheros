@@ -12,28 +12,30 @@
 	<body>
 
 		<h3 border="1"> {{ title }} </h3>
-		{% for comm in comm_list %}
+		{% for comm in commList %}
+		<!-- Command ID: '{{ comm[0] }}' -->
+			{% if comm[1]['show'] %}
 
-		<div> {{ comm['description'] }}</div>
+				<div> {{ comm[1]['description'] }}</div> 
 
-		<table border="1" width="100%">
-		<tr>
-			<td>
-				<pre style="white-space: pre-wrap; word-wrap: break-word;">{{ comm['command'] }}</pre>
-			</td>
-		</tr>
+				<table border="1" width="100%">
+				<tr>
+					<td>
+						<pre style="white-space: pre-wrap; word-wrap: break-word;">{{ comm[1]['command'] }}</pre>
+					</td>
+				</tr>
 
-		<tr>
-			<td>
-			{% if comm['response'] %}
-			<pre class="collapse in" style="white-space: pre-wrap; word-wrap: break-word;">{{ comm['response'] }}</pre>
-			{% endif %}
-			</td>
-		</tr>
-		</table>
+				<tr>
+					<td>
+					{% if comm[1]['response'] %}
+					<pre class="collapse in" style="white-space: pre-wrap; word-wrap: break-word;">{{ comm[1]['response'] }}</pre>
+					{% endif %}
+					</td>
+				</tr>
+				</table>
 
-		<br><br>
-
+				<br><br>
+			{% endif %} {# ['show'] #}
 		{% endfor %}
 
 	</body>
