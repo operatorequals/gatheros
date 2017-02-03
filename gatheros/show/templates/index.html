@@ -20,16 +20,31 @@
 		<h3 align="center">GatherOS</h3>
 	</td>
 
-	<td align="center">
+	<td align="left">
 		<table>
-		<tr>	
-			<td width="50%"> <!-- Meta Data -->
-<!--	System Logo Feature not ready!
-				<img src="{{ url_for('static', filename='windows_logo.png') }}" width="36px" height="36px">
-				<img src="{{ url_for('static', filename='windows_logo.png') }}" width="36px" height="36px">
--->
+		<tr>
+			<td width="50%" height="10" >
+<!-- 			<table border="1">
+				{% for comm in tagged %}
+			<tr>
+					<td>{{ comm[1]['command'] }}:</td>
+					<td>
+					{% if comm[1]['response'] %}	<b> {{ comm[1]['response'] }} </b> 
+					{% else %} N/A
+				{% endif %}</td>
+			</tr>
+				{% endfor %}
+			</table>
+ -->				</td>
+			<td width="20%" align="center"> <!-- Meta Data -->
+			{% if os == 'windows' %}
+				<img src="{{ url_for('static', filename='windows_logo.png') }}" width="42px" height="42px">
+			{% elif os == 'linux' %}
+				<img src="{{ url_for('static', filename='linux_logo.png') }}" width="42px" height="42px">
+
+			{% endif %}
 			</td>
-			<td align="right" width="50%"> <!-- Search Button -->
+			<td align="right" width="30%"> <!-- Search Button -->
 				<form action="search/" method="post">
 				<input name="keyword" type="text">
 				<input  type="submit" value="Search">

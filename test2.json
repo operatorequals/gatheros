@@ -1,4 +1,6 @@
 {
+  "Populated" : false,
+  "OperatingSystem" : "Linux",
  "Commands": {
   "401cc436efafc1372f0fe9a7": {
    "index": 1, 
@@ -196,7 +198,8 @@
    "unlocks": [], 
    "depends": [], 
    "command": "uname -r", 
-   "response_filter": ""
+   "response_filter": "",
+   "tag" : true
   }, 
   "5664a04a65a424083a21cc80": {
    "index": 9, 
@@ -214,7 +217,8 @@
    "unlocks": [], 
    "depends": [], 
    "command": "pwd", 
-   "response_filter": ""
+   "response_filter": "",
+   "tag":true
   }, 
   "aa41fe2f74ed64fe3ba51a3e": {
    "index": 1, 

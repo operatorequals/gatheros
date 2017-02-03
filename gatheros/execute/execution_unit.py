@@ -80,4 +80,5 @@ class ExecutionUnit :
 			print "Remaining Commands: %d" % len(self.notExecuted)
 			readyCommands = self.getReadyCommands()
 
+		self.commStruct['Populated'] = True
 		return self.commStruct
