@@ -90,7 +90,7 @@
    "unlocks": [], 
    "depends": [], 
    "command": "cat /proc/cpuinfo | grep nx", 
-   "response_filter": "if response : 'True'"
+   "response_filter": ""
   }, 
   "4e34998c85fef83c0e7a13af": {
    "index": 17, 
@@ -877,7 +877,7 @@
  "Metadata": {
   "creation_date": "2017-01-28", 
   "description": "A Generic Information Gathering Scenario inspired by @rebootuser ", 
-  "author": "john.torakis@gmail.com",
+  "author": "operatorequals",
   "reference" : "https://www.rebootuser.com/?p=1623"
  }
 }

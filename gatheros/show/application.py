@@ -29,7 +29,7 @@ def index_page() :
 	ordered_groups = sorted(groups.items(), key = lambda i:i[1]['index'] )
 	return render_template("index.html",\
 		commandGroups = ordered_groups, tagged = tagged,\
-		os = commStruct['OperatingSystem'].lower(), populated = commStruct['Populated'])
+		os = commStruct['OperatingSystem'].lower(), populated = commStruct['Populated'], metadata = commStruct['Metadata'].iteritems() )
 
 
 @flask_app.route('/command/<name>')

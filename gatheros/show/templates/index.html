@@ -25,7 +25,8 @@
 		<table>
 		<tr>
 			<td width="50%" height="10" >
-<!-- 			<table border="1">
+								<!-- System Metadata -->
+<!-- 			<table border="1">	
 				{% for comm in tagged %}
 			<tr>
 					<td>{{ comm[1]['command'] }}:</td>
@@ -36,7 +37,21 @@
 			</tr>
 				{% endfor %}
 			</table>
- -->				</td>
+			 -->
+			 					<!-- Scenario Metadata -->
+<!--
+ 			<table border="1">		
+	 			{% for k, v in metadata %}
+				<tr>
+					<td>{{ k }}: </td>
+					<td align="center"> {% if k == 'reference' %} <a href="{{ v }}"> {% else %}  {{ v }}	{% endif %}</td>
+				</tr>
+ 			{% endfor %}
+ 			</table>
+ 			</td>
+ -->
+
+
 			<td width="20%" align="center"> <!-- Meta Data -->
 			{% if os == 'windows' %}
 				<img src="{{ url_for('static', filename='windows_logo.png') }}" width="48px" height="48px">
