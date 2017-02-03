@@ -61,11 +61,8 @@ def searchPage() :
 		toSearch = [key]
 		toSearch.extend(command.values())
 		toSearch = [ v for v in toSearch if isinstance(v, basestring) and v]
-		# print toSearch
-		# print
 		toSearch = ' '.join( toSearch )
 		if keyword in toSearch :
 			ret['Commands'].append( (key, command) )
-	print ret['Commands']
 	ret['name'] = 'Search for keyword "%s" - %d results' % (keyword, len( ret['Commands'] ))
 	return render_template("commands.html", commList = ret['Commands'], title = ret['name'])

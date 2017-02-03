@@ -13,11 +13,14 @@ def createEmptyStruct () :
 	ret = {}
 	ret['CommandGroups'] = {}
 	ret['Commands'] = {}
+	ret['OperatingSystem'] = ""
+	ret['Populated'] = False
 	ret['DependenyTokens'] = []
 	ret['Metadata'] = {
 		'author' : '',
 		'description' : '',
-		'creation_date' : datetime.datetime.now().strftime ( "%Y-%m-%d" )
+		'creation_date' : datetime.datetime.now().strftime ( "%Y-%m-%d" ),
+		'reference': ''
 	}
 	return ret
 
