@@ -60,7 +60,6 @@ class ExecutionUnit :
 		ret = set()
 		for comm_id in self.notExecuted :
 			command = self.allCommandsDict[ comm_id ]
-			# print command['depends']
 			commDependencies = set( command['depends'] )
 			if commDependencies <= self.dependencies_met :
 				ret.add( comm_id )

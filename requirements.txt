@@ -2,3 +2,4 @@
 pypi-publisher
 flask
 termcolor
+paramiko

@@ -1,9 +1,11 @@
 import socket
 import paramiko
 import os
-
+import getpass
 
 client = None
+ssh = None
+
 def runSocketCommand( comm ) :
 	client.send( ' ' + comm + '\n')
 	return client.recv(4096*2)
@@ -11,9 +13,18 @@ def runSocketCommand( comm ) :
 def runLocalhostCommand( comm ) :
 	return os.popen( " " + comm ).read()
 
+def runSSHCommand( comm ) :
+	stdin, stdout, stderr = ssh.exec_command( comm )
+	out = stdout.read()
+	if not out :
+		return stderr.read()
+	# print out
+	return out
+
 
 def get_command_execute ( args ) :
 	global client
+	global ssh
 	if args.command == "bind" :
 		client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		address = (args.IP, args.port )
@@ -40,6 +51,18 @@ def get_command_execute ( args ) :
 
 
 	elif args.command == "ssh" :
-		pass
+
+		user, host = args.connection.split('@')[:2]
+		password = args.password
+		if not password :
+			password = getpass.getpass("SSH Password: ")
+
+		ssh = paramiko.SSHClient()
+		ssh.set_missing_host_key_policy( paramiko.AutoAddPolicy() )
+		try :
+			ssh.connect( host , username = user, password = password, port = args.port )
+		except paramiko.ssh_exception.AuthenticationException :
+			print "Authentication Failed"
+		runCommand = runSSHCommand
 
 	return runCommand

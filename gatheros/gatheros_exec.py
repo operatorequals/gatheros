@@ -20,9 +20,11 @@ subparsers = parser.add_subparsers( help = "The connection type with the remote 
 localhost_parser = subparsers.add_parser( "local" )
 
 ssh_parser = subparsers.add_parser("ssh")
-ssh_parser.add_argument("SSH_connection", default = "root@172.0.0.1",\
+ssh_parser.add_argument("connection", default = "root@172.0.0.1",\
 						 help = "SSH connection string. example: 'user@address'")
 ssh_parser.add_argument("--port", '-p', help = "TCP port to SSH (default: 22)", default = 22, type = int)
+ssh_parser.add_argument("--password", '-P',\
+						help = "Password to use when connecting to server. If password is not given it's asked from the tty.")
 
 
 bind_parser = subparsers.add_parser("bind")
