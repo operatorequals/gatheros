@@ -9,12 +9,11 @@ def runSocketCommand( comm ) :
 	return client.recv(4096*2)
 
 def runLocalhostCommand( comm ) :
-	return os.popen( " " + comm + " 2>&1" ).read()
-
-
+	return os.popen( " " + comm ).read()
 
 
 def get_command_execute ( args ) :
+	global client
 	if args.command == "bind" :
 		client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		address = (args.IP, args.port )
