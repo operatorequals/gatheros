@@ -125,7 +125,7 @@
    "show": true, 
    "unlocks": [], 
    "depends": [], 
-   "command": "o which $pr; done", 
+   "command": "dpkg --list 2>/dev/null| grep compiler |grep -v decompiler 2>/dev/null && yum list installed 'gcc*' 2>/dev/null| grep gcc 2>/dev/null", 
    "response_filter": ""
   }, 
   "045740428482cc7927286712": {
@@ -577,7 +577,7 @@
    "show": true, 
    "unlocks": [], 
    "depends": [], 
-   "command": "for pr in", 
+   "command": "for pr in 'nmap' 'wget' 'ufw'; do which $pr; done", 
    "response_filter": ""
   }, 
   "e7a0138a82fa34ab38de1941": {

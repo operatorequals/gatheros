@@ -56,13 +56,14 @@ def main( arguments = sys.argv[1:] ) :
 	command_dict = execUnit.execute()
 
 	json_dump = json.dumps( command_dict, indent = 1 )
+	
 	if args.output_file :
 		with open( args.output_file, 'w' ) as toWrite :
 			toWrite.write( json_dump )
 	else :
 		print json_dump
 
-	return command_dict
+	# return command_dict
 
 
 if __name__ == '__main__' :

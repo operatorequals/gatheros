@@ -1,6 +1,6 @@
 import socket
 import paramiko
-import os
+import os, sys
 import getpass
 
 client = None
@@ -18,7 +18,6 @@ def runSSHCommand( comm ) :
 	out = stdout.read()
 	if not out :
 		return stderr.read()
-	# print out
 	return out
 
 
@@ -55,7 +54,7 @@ def get_command_execute ( args ) :
 		user, host = args.connection.split('@')[:2]
 		password = args.password
 		if not password :
-			password = getpass.getpass("SSH Password: ")
+			password = getpass.getpass("(SSH) Password for user '%s': " % user)
 
 		ssh = paramiko.SSHClient()
 		ssh.set_missing_host_key_policy( paramiko.AutoAddPolicy() )
@@ -63,6 +62,7 @@ def get_command_execute ( args ) :
 			ssh.connect( host , username = user, password = password, port = args.port )
 		except paramiko.ssh_exception.AuthenticationException :
 			print "Authentication Failed"
+			sys.exit(-1)
 		runCommand = runSSHCommand
 
 	return runCommand
