@@ -1,8 +1,8 @@
 GatherOS
 ===============================
 
-version number: 0.0.1
-author: John Torakis
+The tool is described in the Blog Post:
+https://securosophy.com/2017/02/06/information-gathering-is-not-enough-information-storing-and-sharing-is-better-meet-gatheros/
 
 Overview
 --------
@@ -22,12 +22,3 @@ Or clone the repo:
     $ git clone https://github.com/operatorequals/gatheros.git
     $ python setup.py install
     
-Contributing
-------------
-
-TBD
-
-Example
--------
-
-TBD
