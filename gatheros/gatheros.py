@@ -18,6 +18,7 @@ parser.add_argument( "--execute", help = "", type = str, default = "-o %s local"
 parser.add_argument( "--show", help = "", default = "%s -a localhost" % temp.name )
 
 
+parser.add_argument( "--live", help = "", default = False, action = 'store_true'  )
 
 
 def main( arguments = sys.argv[1:] ) :
@@ -27,6 +28,7 @@ def main( arguments = sys.argv[1:] ) :
 	# print args
 	print "Running 'execute' module with '%s' arguments" % args.execute
 	command_dict = gatheros_exec.main( args.execute.split() )
+	execUnit = gatheros_exec.getExecutionUnit()
 
 	print "Running 'show' module with '%s' arguments" % args.show
 	gatheros_show.main( args.show.split() )	

@@ -45,6 +45,7 @@ def command_loader( json_file ) :
 		ret = json.load( file )
 	return ret
 
+execUnit = ''
 
 def main( arguments = sys.argv[1:] ) :
 
@@ -52,6 +53,7 @@ def main( arguments = sys.argv[1:] ) :
 	command_dict = command_loader( args.command_file )
 
 	execute_command = get_command_execute( args )
+	global execUnit
 	execUnit = ExecutionUnit( execute_command, command_dict )
 	command_dict = execUnit.execute()
 
@@ -64,6 +66,10 @@ def main( arguments = sys.argv[1:] ) :
 		print json_dump
 
 	# return command_dict
+
+def getExecutionUnit() :
+	return execUnit
+
 
 
 if __name__ == '__main__' :

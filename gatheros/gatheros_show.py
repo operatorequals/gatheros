@@ -20,8 +20,9 @@ parser.add_argument("file",\
 
 
 
-def show( command_dict, ip, port ) :
+def show( command_dict, ip, port, execUnit = None ) :
 	flask.commStruct = command_dict
+	flask.execUnit = execUnit
 	flask.flask_app.run( host = ip, port = port )
 
 

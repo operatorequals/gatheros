@@ -81,3 +81,9 @@ class ExecutionUnit :
 
 		self.commStruct['Populated'] = True
 		return self.commStruct
+
+
+
+	def executeAdhoc( command ) :
+		response = self.execute_command ( command ).decode( 'utf8' )
+		return response

@@ -19,6 +19,10 @@ flask_app = Flask( flask_app_name,\
 					static_folder = static_folder)
 
 commStruct = {}
+execUnit = None
+
+
+
 
 
 @flask_app.route('/')
@@ -66,3 +70,25 @@ def searchPage() :
 			ret['Commands'].append( (key, command) )
 	ret['name'] = 'Search for keyword "%s" - %d results' % (keyword, len( ret['Commands'] ))
 	return render_template("commands.html", commList = ret['Commands'], title = ret['name'])
+
+
+
+@flask_app.route("/live", methods = ['POST', 'GET'])
+def liveCommands() :
+	# if not execUnit :
+	# 	return abort(404)
+	if request.method == "GET" :
+		return render_template("live.html", comm_resp = [ ("uname", "linux"),("whoami","root") ], os = commStruct['OperatingSystem'].lower())
+
+	data = request.form
+	# if 'command' not in data :
+	# 	return index()
+
+	command = data['command']
+	resp = ''
+	try :
+		resp = execUnit.executeAdhoc( command )
+	except :
+		return abort(500)
+
+	return render_template("live.html", comm_resp = [ (command, resp) ], os = commStruct['OperatingSystem'].lower())
