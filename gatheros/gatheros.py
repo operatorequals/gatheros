@@ -33,9 +33,9 @@ def main( arguments = sys.argv[1:] ) :
 
 	print "Running 'show' module with '%s' arguments" % args.show
 	if args.live :
-		gatheros_show.main( args.show.split(), execUnit )	
+		gatheros_show.main( args.show.split(), execUnit , command_dict = command_dict )	
 	else :
-		gatheros_show.main( args.show.split() )
+		gatheros_show.main( args.show.split(), command_dict = command_dict )
 
 
 if __name__ == '__main__' :

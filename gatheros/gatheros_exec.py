@@ -65,7 +65,8 @@ def main( arguments = sys.argv[1:] ) :
 	else :
 		print json_dump
 
-	# return command_dict
+	return command_dict
+
 
 def getExecutionUnit() :
 	return execUnit

@@ -63,6 +63,9 @@ def get_command_execute ( args ) :
 		except paramiko.ssh_exception.AuthenticationException :
 			print "Authentication Failed"
 			sys.exit(-1)
+		except paramiko.ssh_exception.NoValidConnectionsError :
+			print "No SSH server found on port %s:%d" % (host, args.port)
+			sys.exit(-2)
 		runCommand = runSSHCommand
 
 	return runCommand

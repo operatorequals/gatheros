@@ -26,15 +26,16 @@ def show( command_dict, ip, port, execUnit = None ) :
 	flask.flask_app.run( host = ip, port = port )
 
 
-def main( arguments = sys.argv[1:], execUnit = None ) :
+def main( arguments = sys.argv[1:], execUnit = None, command_dict = None ) :
 
 	args = parser.parse_args( arguments )
 	# print args
-	with open( args.file, 'r' ) as file :
-		command_dict = json.load( file )
+	if not command_dict :
+		with open( args.file, 'r' ) as file :
+			command_dict = json.load( file )
 
 	if not args.quiet :
-		os.system(" firefox http://localhost:%d &" % args.port)
+		os.system(" firefox http://%s:%d &" % (args.a__address, args.port) )
 	else :
 		print "Starting Web Application at 'http://localhost:%d'" % args.port
 

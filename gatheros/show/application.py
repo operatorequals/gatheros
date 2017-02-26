@@ -33,7 +33,7 @@ def index_page() :
 	ordered_groups = sorted(groups.items(), key = lambda i:i[1]['index'] )
 	return render_template("index.html",\
 		commandGroups = ordered_groups, tagged = tagged,\
-		os = commStruct['OperatingSystem'].lower(), populated = commStruct['Populated'], metadata = commStruct['Metadata'].iteritems() )
+		os = commStruct['OperatingSystem'].lower(), populated = commStruct['Populated'], metadata = commStruct['Metadata'].iteritems(), execUnit = bool(execUnit) )
 
 
 @flask_app.route('/command/<name>')
@@ -80,7 +80,7 @@ def liveCommands() :
 		return abort(405)
 
 	if request.method == "GET" :
-		return render_template("live.html", comm_resp = [ ("uname", "linux"),("whoami","root") ], os = commStruct['OperatingSystem'].lower())
+		return render_template("live.html", comm_resp = [ ("","") ], os = commStruct['OperatingSystem'].lower())
 
 	data = request.form
 	# if 'command' not in data :

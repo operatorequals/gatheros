@@ -24,7 +24,7 @@
 	<td align="left">
 		<table>
 		<tr>
-			<td width="50%" height="10" >
+			<td width="40%" height="10" >
 								<!-- System Metadata -->
 <!-- 			<table border="1">	
 				{% for comm in tagged %}
@@ -66,6 +66,11 @@
 				<input  type="submit" value="Search">
 				</form>
 			</td>
+			{% if execUnit %}
+			<td width="10%" align="right">
+			<a href="{{ url_for( 'liveCommands' ) }}" align="right">Live Commands</a>
+			</td>
+			{% endif %}
 		</tr>
 		</table>
 
