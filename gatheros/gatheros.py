@@ -30,8 +30,12 @@ def main( arguments = sys.argv[1:] ) :
 	command_dict = gatheros_exec.main( args.execute.split() )
 	execUnit = gatheros_exec.getExecutionUnit()
 
+
 	print "Running 'show' module with '%s' arguments" % args.show
-	gatheros_show.main( args.show.split() )	
+	if args.live :
+		gatheros_show.main( args.show.split(), execUnit )	
+	else :
+		gatheros_show.main( args.show.split() )
 
 
 if __name__ == '__main__' :

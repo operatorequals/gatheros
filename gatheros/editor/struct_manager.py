@@ -58,7 +58,7 @@ createEmptyCommand.index = 0
 
 def addCommand( struct, comm_group_codename, comm_id, command ) :
 	struct['Commands'][comm_id] = command
-	struct['CommandGroups'][comm_group_codename]['Commands'][comm_group_codename].append(comm_id)
+	struct['CommandGroups'][comm_group_codename]['Commands'].append(comm_id)
 
 
 def deleteCommand( comm_id, comm_group_codename = None ) :
@@ -71,3 +71,7 @@ def deleteCommand( comm_id, comm_group_codename = None ) :
 				commandgroup['Commands'].remove( comm_id )
 			except :
 				pass
+
+def addCommandGroup( struct, codename, commandgroup ) :
+
+	struct['CommandGroups'][codename] = commandgroup

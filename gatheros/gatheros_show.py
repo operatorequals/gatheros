@@ -26,7 +26,7 @@ def show( command_dict, ip, port, execUnit = None ) :
 	flask.flask_app.run( host = ip, port = port )
 
 
-def main( arguments = sys.argv[1:] ) :
+def main( arguments = sys.argv[1:], execUnit = None ) :
 
 	args = parser.parse_args( arguments )
 	# print args
@@ -38,7 +38,7 @@ def main( arguments = sys.argv[1:] ) :
 	else :
 		print "Starting Web Application at 'http://localhost:%d'" % args.port
 
-	show( command_dict, args.a__address, args.port )
+	show( command_dict, args.a__address, args.port, execUnit )
 
 
 if __name__ == '__main__' :

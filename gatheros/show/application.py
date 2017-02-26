@@ -2,6 +2,8 @@ from flask import Flask, request, render_template, abort
 import json
 import os
 
+from editor.struct_manager import addCommand, createEmptyCommandGroup, createEmptyCommand, addCommandGroup
+
 base_dir = os.sep.join(__file__.split( os.sep )[:-1])
 
 template_folder = base_dir + os.sep + "templates"
@@ -20,8 +22,6 @@ flask_app = Flask( flask_app_name,\
 
 commStruct = {}
 execUnit = None
-
-
 
 
 
@@ -75,8 +75,10 @@ def searchPage() :
 
 @flask_app.route("/live", methods = ['POST', 'GET'])
 def liveCommands() :
-	# if not execUnit :
-	# 	return abort(404)
+
+	if not execUnit :
+		return abort(405)
+
 	if request.method == "GET" :
 		return render_template("live.html", comm_resp = [ ("uname", "linux"),("whoami","root") ], os = commStruct['OperatingSystem'].lower())
 
@@ -88,7 +90,19 @@ def liveCommands() :
 	resp = ''
 	try :
 		resp = execUnit.executeAdhoc( command )
-	except :
+	except Exception as e :
+		print e
 		return abort(500)
+
+
+	if "livecommands" not in commStruct['CommandGroups'].keys() :
+		cname, group = createEmptyCommandGroup( "Live Commands" )
+		addCommandGroup( commStruct, cname, group )
+
+	id_, comm = createEmptyCommand()
+	comm['command'] = command
+	comm['response'] = resp
+	addCommand( commStruct, "livecommands", id_, comm )
+
 
 	return render_template("live.html", comm_resp = [ (command, resp) ], os = commStruct['OperatingSystem'].lower())

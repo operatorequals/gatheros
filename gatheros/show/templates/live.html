@@ -1,0 +1,104 @@
+
+<html>
+
+	<head>
+		<title> GatherOS </title>
+
+		<script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+
+		<link title="no title" media="all" charset="utf-8" href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+
+	</head>
+
+
+	<body bgcolor="">
+		
+	<table border="0" width="100%" height="100%">
+
+	<tr height="10%">
+	<td width="20%">
+		<h3 align="center">GatherOS</h3>
+		<h6 align="center"><a href="https://github.com/operatorequals/gatheros"> Github repo </a></h6>
+	</td>
+
+	<td align="left">
+		<table>
+		<tr>
+			<td width="50%" height="10%" >
+								<!-- System Metadata -->
+<!-- 			<table border="1">	
+				{% for comm in tagged %}
+			<tr>
+					<td>{{ comm[1]['command'] }}:</td>
+					<td>
+					{% if comm[1]['response'] %}	<b> {{ comm[1]['response'] }} </b> 
+					{% else %} N/A
+				{% endif %}</td>
+			</tr>
+				{% endfor %}
+			</table>
+			 -->
+			 					<!-- Scenario Metadata -->
+<!--
+ 			<table border="1">		
+	 			{% for k, v in metadata %}
+				<tr>
+					<td>{{ k }}: </td>
+					<td align="center"> {% if k == 'reference' %} <a href="{{ v }}"> {% else %}  {{ v }}	{% endif %}</td>
+				</tr>
+ 			{% endfor %}
+ 			</table>
+ 			</td>
+ -->
+
+
+			<td width="20%" align="center"> <!-- Meta Data -->
+			{% if os == 'windows' %}
+				<img src="{{ url_for('static', filename='windows_logo.png') }}" width="48px" height="48px">
+			{% elif os == 'linux' %}
+				<img src="{{ url_for('static', filename='linux_logo.png') }}" width="48px" height="48px">
+
+			{% endif %}
+			</td>
+			<td align="right" width="30%"> <!-- Search Button -->
+				<form action="search/" method="post">
+				<input name="keyword" type="text">
+				<input  type="submit" value="Search">
+				</form>
+			</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+
+	<tr height="80%" width="100%" position="top">
+	<td>
+		<table border="2" align="center" width="100%" position="top" height="80%">
+			
+		{% for comm in comm_resp %}
+			<tr width="100%">
+				<td width="100%">
+<pre>> {{ comm[0] }}
+{{ comm[1] }}</pre>
+				</td>
+			</tr>
+		{% endfor %}
+		</table>
+		
+		<table>
+			<tr>
+				<td width="100%">
+		<form action="{{ url_for( 'liveCommands' ) }}" method="POST">
+			<input name="command" type="text" size="60">
+		</form>
+				</td>
+			</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+
+
+
+</body>

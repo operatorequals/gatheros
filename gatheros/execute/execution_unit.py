@@ -84,6 +84,6 @@ class ExecutionUnit :
 
 
 
-	def executeAdhoc( command ) :
+	def executeAdhoc( self, command ) :
 		response = self.execute_command ( command ).decode( 'utf8' )
 		return response
