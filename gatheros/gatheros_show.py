@@ -16,7 +16,7 @@ parser.add_argument("-p", "--port",\
 parser.add_argument("--quiet","-q",\
 					help = "Start the service without spawning a browser instance", action = "store_true", default = False)
 parser.add_argument("file",\
-					help = "Location of the 'gatheros' system info file to open")
+					help = "Location of the 'gatheros' system info file to open", default = '-')
 
 
 
