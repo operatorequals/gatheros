@@ -3,12 +3,31 @@ import paramiko
 import os, sys
 import getpass
 
+# from time import sleep
+
 client = None
 ssh = None
 
 def runSocketCommand( comm ) :
-	client.send( ' ' + comm + '\n')
-	return client.recv(4096*2)
+	canc_rand = os.urandom(4).encode('hex')
+	compl_rand = os.urandom(4).encode('hex')
+	
+	command = ' ' + comm + ' && echo %s || echo %s \n' % ( compl_rand, canc_rand )
+	print "> " + command,
+	client.send( command )
+	resp = ''
+
+	while compl_rand not in resp and canc_rand not in resp :
+		resp += client.recv( 4096 * 4 )
+	resp = resp.strip()
+
+	if compl_rand in resp :
+		return resp.replace( compl_rand, '' )
+	if canc_rand in resp :
+		return ''
+
+	return resp
+
 
 def runLocalhostCommand( comm ) :
 	return os.popen( " " + comm ).read()
@@ -28,6 +47,7 @@ def get_command_execute ( args ) :
 		client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		address = (args.IP, args.port )
 		client.connect( address )
+		# client.settimeout(2)
 		runCommand = runSocketCommand
 
 
@@ -42,12 +62,11 @@ def get_command_execute ( args ) :
 			print "Aborted by user..."
 			sys.exit(-2)
 		client, address = server.accept()
+		# client.settimeout(2)
 		runCommand = runSocketCommand
-
 
 	elif args.command == "local" :
 		runCommand = runLocalhostCommand
-
 
 	elif args.command == "ssh" :
 

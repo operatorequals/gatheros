@@ -29,16 +29,23 @@ ssh_parser.add_argument("--password", '-P',\
 
 bind_parser = subparsers.add_parser("bind")
 bind_parser.add_argument("IP", help = "The IP address of the remote host")
-bind_parser.add_argument("--port", '-p', help = "TCP port to connect (default: 4444)", default = 4444, type = int)
+bind_parser.add_argument("--port", '-p', help = "Port to connect (default: 4444)", default = 4444, type = int)
+bind_parser.add_argument("--udp", '-u', help = "Use UDP protocol instead of TCP", default = False, action = 'store_true')
 
 
 reverse_parser = subparsers.add_parser("reverse")
-reverse_parser.add_argument("--port", '-p', help = "TCP port to wait for the shell (default: 4444)", default = 4444, type = int)
+reverse_parser.add_argument("--port", '-p', help = "TCP port to wait for the shell (default: 4444)",\
+					default = 4444, type = int)
+reverse_parser.add_argument("--udp", '-u', help = "Use UDP protocol instead of TCP", default = False, action = 'store_true')
+
 
 parser.add_argument("--output-file", '-o',\
 					help = "The file to save the command output" )
 
-# parser.add_argument("--quiet", '-q', help = "")
+parser.add_argument("-q", '--quiet', help = "Do not print output of the executed commands",\
+					default = False, action = 'store_true')
+
+
 
 def command_loader( json_file ) :
 	with open( json_file, 'r' ) as file :
@@ -63,7 +70,8 @@ def main( arguments = sys.argv[1:] ) :
 		with open( args.output_file, 'w' ) as toWrite :
 			toWrite.write( json_dump )
 	else :
-		print json_dump
+		if not args.quiet :
+			print json_dump
 
 	return command_dict
 
