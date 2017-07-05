@@ -26,7 +26,8 @@ class ExecutionUnit :
 		if os.lower().startswith('win') :
 			comm = '$LastExitCode'				# powershell
 			# comm = '%errorlevel%'				# prompt
-		resp = self.executeAdhoc ( comm )
+		resp = self.executeAdhoc ( comm ).strip()
+		resp = int(resp)
 		return resp
 
 
@@ -46,6 +47,8 @@ class ExecutionUnit :
 
 				try :
 					response_code = self.getLastResponseCode ( )
+					if response_code != 0 :
+						print response_code, command['command']
 					command['response_code'] = response_code
 				except :
 					print sys.exc_info()[0], sys.exc_info()[1]

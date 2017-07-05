@@ -21,7 +21,16 @@
 				<table border="1" width="100%">
 				<tr>
 					<td>
-						<pre style="white-space: pre-wrap; word-wrap: break-word;">{{ comm[1]['command'] }}</pre>
+						<table width="100%"><tr width="100%"><td width="90%">
+							<pre style="white-space: pre-wrap; word-wrap: break-word;" >{{ comm[1]['command'] }}</pre>
+							</td><td border="1" align="center">	
+							{% if 'response_code' in comm[1] %}
+
+								 <pre style="background-color:#ffffff">{{ comm[1]['response_code'] }}</pre>
+							
+							{% endif %}
+							</td></tr>
+						</table>
 					</td>
 				</tr>
 
